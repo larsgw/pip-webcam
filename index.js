@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   const pip = 'pictureInPictureEnabled' in document
 
   if (!(cam && pip)) {
-    alert(`Features not available: ${[!cam &&  'Webcam', !pip && 'Picture in Picture'].filter(Boolean).join(' and '))}`)
+    alert(`Features not available: ${[!cam &&  'Webcam', !pip && 'Picture in Picture'].filter(Boolean).join(' and ')}`)
   }
 
   video.srcObject = await navigator.mediaDevices.getUserMedia({
