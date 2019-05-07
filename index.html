@@ -5,10 +5,29 @@
     <title>Picture in Picture Webcam</title>
     <meta name="description" content="Display a webcam with the Picture in Picture API">
 
+    <link rel="stylesheet" href="index.css">
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
-    <video id="video"></video>
-    <button id="button">Play</button>
+    <main>
+      <figure>
+        <video id="source"></video>
+        <video id="target"></video>
+      </figure>
+
+      <form >
+        <button id="button" onclick="return false">Play</button>
+
+        <h2>Effects</h2>
+
+        <select id="effects">
+          <option value="none">None</option>
+          <optgroup label="Filters">
+            <option value="grey">Greyscale</option>
+            <option value="sepia">Sepia</option>
+          </optgroup>
+        </select>
+      </form>
+    </main>
   </body>
 </html>
