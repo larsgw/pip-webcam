@@ -42,6 +42,74 @@ const Effects = {
       var a = +(d > 25)
       frame[i * 4 + 3] = [0, 255][a]
     }
+  },
+
+  mirror_left (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (x < 0.5 * this.width) {
+        continue
+      } else {
+        var j = (y * this.width) + (this.width - x)
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+      }
+    }
+  },
+
+  mirror_right (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (x > 0.5 * this.width) {
+        continue
+      } else {
+        var j = (y * this.width) + (this.width - x)
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+      }
+    }
+  },
+
+  mirror_top (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (y < 0.5 * this.height) {
+        continue
+      } else {
+        var j = ((this.height - y) * this.width) + x
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+      }
+    }
+  },
+
+  mirror_bottom (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (y > 0.5 * this.height) {
+        continue
+      } else {
+        var j = ((this.height - y) * this.width) + x
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+      }
+    }
   }
 }
 
@@ -75,7 +143,7 @@ class Processor {
     this.context.drawImage(this.video, 0, 0, this.width, this.height)
     const frame = this.context.getImageData(0, 0, this.width, this.height)
     if (this.effect in Effects) {
-      Effects[this.effect](frame.data)
+      Effects[this.effect].call(this, frame.data)
     }
     this.context.putImageData(frame, 0, 0)
 
