@@ -44,6 +44,54 @@ const Effects = {
     }
   },
 
+  mirror_horizontal (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (x < 0.5 * this.width) {
+        continue
+      } else {
+        var j = (y * this.width) + (this.width - x)
+        var pr = frame[i * 4 + 0]
+        var pg = frame[i * 4 + 1]
+        var pb = frame[i * 4 + 2]
+
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+        frame[j * 4 + 0] = pr
+        frame[j * 4 + 1] = pg
+        frame[j * 4 + 2] = pb
+      }
+    }
+  },
+
+  mirror_vertical (frame) {
+    const l = frame.length / 4
+
+    for (var i = 0; i < l; i++) {
+      var x = i % this.width
+      var y = (i - x) / this.width
+      if (y < 0.5 * this.height) {
+        continue
+      } else {
+        var j = ((this.height - y) * this.width) + x
+        var pr = frame[i * 4 + 0]
+        var pg = frame[i * 4 + 1]
+        var pb = frame[i * 4 + 2]
+
+        frame[i * 4 + 0] = frame[j * 4 + 0]
+        frame[i * 4 + 1] = frame[j * 4 + 1]
+        frame[i * 4 + 2] = frame[j * 4 + 2]
+        frame[j * 4 + 0] = pr
+        frame[j * 4 + 1] = pg
+        frame[j * 4 + 2] = pb
+      }
+    }
+  },
+
   mirror_left (frame) {
     const l = frame.length / 4
 
@@ -168,6 +216,7 @@ async function init () {
   })
 
   effects.addEventListener('change', function () {
+    console.log(this.value in Effects)
     processor.effect = this.value
   })
 
